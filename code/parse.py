@@ -35,6 +35,7 @@ def parse_line( line ) :
 	return row
 
 def delete_stop_words( dictionary ) :
+	dictionary = sorted( dictionary )
 	return dictionary
 
 def to_csv_format( data , dictionary ) :
