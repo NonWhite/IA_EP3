@@ -1,3 +1,6 @@
+# Python compile files
+*.pyc
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
