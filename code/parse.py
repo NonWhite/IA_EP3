@@ -1,10 +1,9 @@
 import sys
 from utils import *
 from math import log
+from math import ceil
 from nltk.stem.porter import PorterStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
-
-COUNTERS = {}
 
 def update( dict_words , lst_words ) :
 	for k in lst_words :
@@ -27,16 +26,7 @@ def get_words( cad ) :
 	stemmer = PorterStemmer()
 	lemmatizer = WordNetLemmatizer()
 	standardize = lambda w : str( stemmer.stem( str( lemmatizer.lemmatize( w ) ) ) )
-	#standardize = lambda w : str( lemmatizer.lemmatize( w ) )
 	words = [ standardize( w ) for w in words if not is_stop_word( w ) ]
-	# TODO: Me quede en la Q
-	'''
-	for w in words :
-		if w in COUNTERS : continue
-		if w.startswith( 'q' ) :
-			COUNTERS[ w ] = True
-			print w
-	'''
 	return words
 
 def parse_line( line ) :
@@ -92,11 +82,10 @@ def to_tf_idf_vector( infile , has_header = True ) :
 	dictionary = []
 	doc_freq = {}
 	with open( infile , 'r' ) as f :
-		first = True
 		for line in f :
 			row = parse_line( line[ :-1 ] )
-			if has_header and first :
-				first = False
+			if has_header :
+				has_header = False
 				continue
 			data.append( row )
 			words = [ w for w in row[ 1 ].keys() if w not in dictionary ]
@@ -112,10 +101,25 @@ def to_tf_idf_vector( infile , has_header = True ) :
 			tf_idf_row[ 1 ][ k ] = words[ k ] * log( N / doc_freq[ k ] )
 		tf_idf_data.append( tf_idf_row )
 	dictionary = delete_stop_words( dictionary )
-	tmp = [ ( doc_freq[ k ] , k ) for k in doc_freq ]
-	tmp = sorted( tmp , reverse = True )
-	for ( f , w ) in tmp[ :50 ] : print "%s: %s" % ( w , f )
+	#tmp = [ ( doc_freq[ k ] , k ) for k in doc_freq ]
+	#tmp = sorted( tmp , reverse = True )
+	#for ( f , w ) in tmp[ :50 ] : print "%s: %s" % ( w , f )
 	return to_csv_format( tf_idf_data , dictionary )
+
+def divide_data( data ) :
+	header = data[ 0 ]
+	data.pop( 0 )
+	ham_type = [ row for row in data if row[ -1 ] == 'ham' ]
+	ham_total = float( len( ham_type ) )
+	spam_type = [ row for row in data if row[ -1 ] == 'spam' ]
+	spam_total = float( len( spam_type ) )
+	ratio = ham_total / spam_total
+	test_ham = int( ceil( ham_total / ratio ) )
+	test_spam = int( ceil( spam_total / ratio ) )
+	test_data = [ header ] + ham_type[ :test_ham ] + spam_type[ :test_spam ]
+	train_data = [ header ] + ham_type[ test_ham: ] + spam_type[ test_spam: ]
+	data = []
+	return ( train_data , test_data )
 
 def export( data , outfile ) :
 	print "Exporting data to %s" % outfile
@@ -129,9 +133,11 @@ if __name__ == "__main__" :
 	if len( sys.argv ) > 1 : infile = sys.argv[ 1 ]
 
 	parsed_data = to_term_freq_vector( infile )
-	export( parsed_data , DEFAULT_OUTFILE % 'term_freq' )
+	train_data , test_data = divide_data( parsed_data )
+	export( train_data , DEFAULT_OUTFILE % 'term_freq_train' )
+	export( test_data , DEFAULT_OUTFILE % 'term_freq_test' )
 
-	'''
 	parsed_data = to_tf_idf_vector( infile )
-	export( parsed_data , DEFAULT_OUTFILE % 'tf_idf' )
-	'''
+	train_data , test_data = divide_data( parsed_data )
+	export( train_data , DEFAULT_OUTFILE % 'tf_idf_train' )
+	export( test_data , DEFAULT_OUTFILE % 'tf_idf_test' )
