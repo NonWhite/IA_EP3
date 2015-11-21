@@ -132,11 +132,11 @@ if __name__ == "__main__" :
 	if len( sys.argv ) > 1 : infile = sys.argv[ 1 ]
 
 	parsed_data = to_term_freq_vector( infile )
-	train_data , test_data = divide_data( parsed_data , test_perc = 0.3 )
+	train_data , test_data = divide_data( parsed_data , test_perc = 0.1 )
 	export( train_data , DEFAULT_OUTFILE % 'term_freq_train' )
 	export( test_data , DEFAULT_OUTFILE % 'term_freq_test' )
 
 	parsed_data = to_tf_idf_vector( infile )
-	train_data , test_data = divide_data( parsed_data , test_perc = 0.3 )
+	train_data , test_data = divide_data( parsed_data , test_perc = 0.1 )
 	export( train_data , DEFAULT_OUTFILE % 'tf_idf_train' )
 	export( test_data , DEFAULT_OUTFILE % 'tf_idf_test' )
