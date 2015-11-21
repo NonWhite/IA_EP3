@@ -1,6 +1,10 @@
 import sys
 from utils import *
 from math import log
+from nltk.stem.porter import PorterStemmer
+from nltk.stem.wordnet import WordNetLemmatizer
+
+COUNTERS = {}
 
 def update( dict_words , lst_words ) :
 	for k in lst_words :
@@ -19,7 +23,20 @@ def get_words( cad ) :
 			continue
 		else : 
 			w = w.split()
-			for sw in w : words.append( sw )
+			for sw in w : words.extend( get_equivalent( sw ) )
+	stemmer = PorterStemmer()
+	lemmatizer = WordNetLemmatizer()
+	standardize = lambda w : str( stemmer.stem( str( lemmatizer.lemmatize( w ) ) ) )
+	#standardize = lambda w : str( lemmatizer.lemmatize( w ) )
+	words = [ standardize( w ) for w in words if not is_stop_word( w ) ]
+	# TODO: Me quede en la Q
+	'''
+	for w in words :
+		if w in COUNTERS : continue
+		if w.startswith( 'q' ) :
+			COUNTERS[ w ] = True
+			print w
+	'''
 	return words
 
 def parse_line( line ) :
@@ -95,6 +112,9 @@ def to_tf_idf_vector( infile , has_header = True ) :
 			tf_idf_row[ 1 ][ k ] = words[ k ] * log( N / doc_freq[ k ] )
 		tf_idf_data.append( tf_idf_row )
 	dictionary = delete_stop_words( dictionary )
+	tmp = [ ( doc_freq[ k ] , k ) for k in doc_freq ]
+	tmp = sorted( tmp , reverse = True )
+	for ( f , w ) in tmp[ :50 ] : print "%s: %s" % ( w , f )
 	return to_csv_format( tf_idf_data , dictionary )
 
 def export( data , outfile ) :
@@ -111,5 +131,7 @@ if __name__ == "__main__" :
 	parsed_data = to_term_freq_vector( infile )
 	export( parsed_data , DEFAULT_OUTFILE % 'term_freq' )
 
+	'''
 	parsed_data = to_tf_idf_vector( infile )
 	export( parsed_data , DEFAULT_OUTFILE % 'tf_idf' )
+	'''
