@@ -1,5 +1,6 @@
 # Python compile files
 *.pyc
+*.swp
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
