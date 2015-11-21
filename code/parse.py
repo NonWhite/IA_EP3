@@ -106,16 +106,15 @@ def to_tf_idf_vector( infile , has_header = True ) :
 	#for ( f , w ) in tmp[ :50 ] : print "%s: %s" % ( w , f )
 	return to_csv_format( tf_idf_data , dictionary )
 
-def divide_data( data ) :
+def divide_data( data , test_perc = 0.15 ) :
 	header = data[ 0 ]
 	data.pop( 0 )
 	ham_type = [ row for row in data if row[ -1 ] == 'ham' ]
 	ham_total = float( len( ham_type ) )
 	spam_type = [ row for row in data if row[ -1 ] == 'spam' ]
 	spam_total = float( len( spam_type ) )
-	ratio = ham_total / spam_total
-	test_ham = int( ceil( ham_total / ratio ) )
-	test_spam = int( ceil( spam_total / ratio ) )
+	test_ham = int( ceil( ham_total * test_perc ) )
+	test_spam = int( ceil( spam_total * test_perc ) )
 	test_data = [ header ] + ham_type[ :test_ham ] + spam_type[ :test_spam ]
 	train_data = [ header ] + ham_type[ test_ham: ] + spam_type[ test_spam: ]
 	data = []
@@ -133,11 +132,11 @@ if __name__ == "__main__" :
 	if len( sys.argv ) > 1 : infile = sys.argv[ 1 ]
 
 	parsed_data = to_term_freq_vector( infile )
-	train_data , test_data = divide_data( parsed_data )
+	train_data , test_data = divide_data( parsed_data , test_perc = 0.3 )
 	export( train_data , DEFAULT_OUTFILE % 'term_freq_train' )
 	export( test_data , DEFAULT_OUTFILE % 'term_freq_test' )
 
 	parsed_data = to_tf_idf_vector( infile )
-	train_data , test_data = divide_data( parsed_data )
+	train_data , test_data = divide_data( parsed_data , test_perc = 0.3 )
 	export( train_data , DEFAULT_OUTFILE % 'tf_idf_train' )
 	export( test_data , DEFAULT_OUTFILE % 'tf_idf_test' )
