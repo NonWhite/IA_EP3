@@ -7,11 +7,10 @@ from pylab import *
 from os.path import *
 from copy import deepcopy as copy
 
-# TODO: Change to term_freq and tf_idf files
 RESULTS_DIR = '../results/'
 IMAGES_DIR = '../doc/images/'
-datasets = [ 'decision_term_freq' , 'decision_tf_idf' , 'naive_term_freq' , 'naive_tf_idf' , 'knear' ]
-colors = [ 'red' , 'green' , 'blue' , 'magenta' , 'cyan' , 'black' , 'white' , 'purple' ]
+datasets = [ 'decision_term_freq' , 'decision_tf_idf' , 'naive_term_freq' , 'naive_tf_idf' , 'knear_term_freq_euclidean' , 'knear_term_freq_manhattan' , 'knear_term_freq_hamming' , 'knear_tf_idf_euclidean' , 'knear_tf_idf_manhattan' , 'knear_tf_idf_hamming' ]
+colors = [ 'red' , 'green' , 'blue' , 'magenta' , 'cyan' , 'black' , 'white' , 'purple' , 'brown' , 'yellow' ]
 metrics = [ 'precision' , 'recall' , 'f1' ]
 
 def read_content( fpath ) :
