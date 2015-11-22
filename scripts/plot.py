@@ -52,7 +52,8 @@ def makePlot( directory , dataname ) :
 	fpath = "%s%s.txt" % ( directory , dataname )
 	experiment_data = read_content( fpath )
 	num_data = len( experiment_data )
-	#for data in experiment_data : print data
+	for data in experiment_data : print data[ 'params' ] , data[ 'f1' ]
+	print sorted( experiment_data , key = lambda r : r[ 'f1' ] , reverse = True )[ 0 ][ 'params' ]
 
 	bar_width = 0.2
 	opacity = 0.4
