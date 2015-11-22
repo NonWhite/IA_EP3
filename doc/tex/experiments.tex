@@ -1,0 +1,54 @@
+\section{Experimentos e resultados}
+\label{sec:experiments}
+
+Nesta seção serão detalhados os experimento feitos usando diferentes ordens das características e das regras de descrição. Além disso, os resultados serão mostrados para fazer algumas comparações em termos de desempenho.
+
+\subsection{Considerações geráis}
+\label{subsec:setup}
+Uma pequena descrição de cada experimento e o nome de cada um estão a continuação:
+	\begin{itemize}
+		\item \textbf{Default}: A ordem das regras de descrição é pela ordem que estão no site oficial (personagem 1 até 151) e a orden dos fatos das características é Type, Color, Size, Weight, Has\_evolution, Is\_evolution, Is\_starter
+		\item \textbf{Is\_evolution}: As regras de descrição foram ordenadas pela característica Is\_evolution, aqueles que tem aquela característica como falsa estarão no início. A ordem das características é igual ao anterior mas a característica Is\_evolution mudou sua posição para o início.
+		\item \textbf{Size}: Neste experimento, as regras de descrição foram ordenadas pela característica Size, estando primeiro as personagens de tamanho pequeno (small), depois mediano (medium) e por último (big). Por outro lado na ordem dos fatos, só mudou a posição de Size ao início.
+		\item \textbf{Best}: Baseado nas estatísticas da tabela~\ref{tab:dataset}, os fatos foram ordenados da seguinte forma: Has\_evolution, Is\_starter, Is\_evolution, Weight, Size, Color, Type. E as regras de descrição foram ordenadas usando as distribuições de percentagens de cada característica, colocando no início aqueles que tem valores mais comuns e no final no caso contrário.
+	\end{itemize}
+	Os experimentos Is\_evolution e Size foram feitos para encontrar se existe uma relação entre a distribuição dos valores de \emph{UMA} característica e o número médio de perguntas que tem que ser feitas ao usuário. Por outro lado, o experimento Best busca a relação entre todas as distribuições de \emph{TODAS} as características e o número médio de perguntas.
+
+\subsection{Resultados}
+\label{subsec:results}
+
+A tabela~\ref{tab:results1} mostra os resultados depois de cada experimento para as 151 personagens do domínio onde \#Conflictos é a quantidade de personagens que não conseguiu acertar o programa.
+
+\begin{table}[ h ]
+	\centering
+	\caption{Resultados dos experimentos}
+	\label{tab:results1}
+	\resizebox{.9\textwidth}{!}{%
+	\begin{tabular}{ l | c c c }
+		Experimento & \#Conflictos & \% personagens acertadas & Num. Médio de perguntas \\ \hline
+		Default & 35 & 76.82 & 12.88 $\pm$ 3.28 \\
+		Is\_evolution & 40 & 73.51 & 12.50 $\pm$ 3.42 \\
+		Size & 35 & 76.82 & 12.14 $\pm$ 2.88 \\
+		Best & 49 & 67.55 & 10.13 $\pm$ 2.97 \\
+	\end{tabular}%
+	}
+\end{table}
+
+Em cada um dos experimentos foram encontradas personagens que fazem conflictos e que não puderam ser ditas pelo programa porque tem as mesmas características que outras ou tem um subconjunto de fatos de outra. Verificando para cada experimento quais são as personagens que estão em conflicto e fazendo uma interseção foi obtida uma lista de personagens que sempre estão em conflicto de tamanho 33. Usando esta lista, aquelas personagens foram excluídas da base de conhecimento, ficando um domínio com 118 personagens e foram feitos experimentos novos com a mesma configuração explicada na seção~\ref{subsec:setup}. Os resultados para estos experimentos são mostrados na tabela~\ref{tab:results2}.
+
+\begin{table}[ h ]
+	\centering
+	\caption{Resultados dos experimentos com 118 personagens}
+	\label{tab:results2}
+	\resizebox{.9\textwidth}{!}{%
+	\begin{tabular}{ l | c c c }
+		Experimento & \#Conflictos & \% personagens acertadas & Num. Médio de perguntas \\ \hline
+		Default & 2 & 98.31 & 13.08 $\pm$ 3.41 \\
+		Is\_evolution & 7 & 94.07 & 12.66 $\pm$ 3.48 \\
+		Size & 2 & 98.31 & 12.25 $\pm$ 2.94 \\
+		Best & 16 & 86.44 & 10.57 $\pm$ 3.00 \\
+	\end{tabular}%
+	}
+\end{table}
+
+Nesta vez, o número de personagens em conflicto é menor em todos os casos, mas para o que deveria ser a melhor ordem das regras ainda tem um número de conflictos maior que os outros experimentos apesar de ter um número médio de perguntas que os outros.
