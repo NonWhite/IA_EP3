@@ -37,7 +37,7 @@ def read_content( fpath ) :
 			elif line.startswith( 'MEAN_ABS' ) :
 				exp[ 'mean_absolute_error' ] = line[:-1].split( ' = ' )[ 1 ].split( ' +/- ' )
 				exp[ 'mean_absolute_error' ] = [ float( v ) for v in exp[ 'mean_absolute_error' ] ]
-			elif line.startswith( 'MEAN_SQR' ) :
+			elif line.startswith( 'MEAN_SQU' ) :
 				exp[ 'mean_squared_error' ] = line[:-1].split( ' = ' )[ 1 ].split( ' +/- ' )
 				exp[ 'mean_squared_error' ] = [ float( v ) for v in exp[ 'mean_squared_error' ] ]
 		if exp : data.append( copy( exp ) )
@@ -52,8 +52,13 @@ def makePlot( directory , dataname ) :
 	fpath = "%s%s.txt" % ( directory , dataname )
 	experiment_data = read_content( fpath )
 	num_data = len( experiment_data )
-	for data in experiment_data : print data[ 'params' ] , data[ 'f1' ]
-	print sorted( experiment_data , key = lambda r : r[ 'f1' ] , reverse = True )[ 0 ][ 'params' ]
+	for data in experiment_data :
+		#print data[ 'params' ]
+		if 'mean_absolute_error' in data :
+			print "%.2f & %.2f & %.2f & %.3f $\pm$ %.3f & %.3f $\pm$ %.3f" % ( data[ 'precision' ][ 0 ] , data[ 'recall' ][ 0 ] , data[ 'f1' ][ 0 ] , -data[ 'mean_absolute_error' ][ 0 ] , data[ 'mean_absolute_error' ][ 1 ] , -data[ 'mean_squared_error' ][ 0 ] , data[ 'mean_squared_error' ][ 1 ] )
+		else :
+			print "%.2f & %.2f & %.2f" % ( data[ 'precision' ][ 0 ] , data[ 'recall' ][ 0 ] , data[ 'f1' ][ 0 ] )
+	#print sorted( experiment_data , key = lambda r : r[ 'f1' ] , reverse = True )[ 0 ][ 'params' ]
 
 	bar_width = 0.2
 	opacity = 0.4
