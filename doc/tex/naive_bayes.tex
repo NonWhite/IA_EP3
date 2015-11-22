@@ -1,0 +1,10 @@
+\section{Naive Bayes}
+\label{sec:bayes}
+
+Os resultados na Tabela~\ref{tab:bayes_term} mostram que aumentar o valor alpha acrescenta a precisão mas diminui a cobertura e portanto também F-measure. Então a melhor configuração usando a representação de frequência de palavras usa alpha igual a 1.
+
+\input{./tables/naive_term}
+
+Na outra representação, o comportamento do classificador e similar para precisão e cobertura, mas em geral F-measure aumenta porque as mudanças de valores entre precisão e cobertura não são tão significativas como no caso anterior. Portanto a melhor configuração para Tf-Idf usa alpha igual a 100.
+
+\input{./tables/naive_tf_idf}

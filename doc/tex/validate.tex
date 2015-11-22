@@ -1,0 +1,9 @@
+\section{Validação}
+\label{sec:validation}
+
+Para validar que tão bem classificam novas instâncias, os modelos serão testados usando o conjunto de treinamento usando as melhores configurações encontradas nas seções anteriores. Os resultados mostram que para a representação com frequência de palavras usar o classificador Naive Bayes ou Decision Tree é quase igual, mas o primeiro tem melhor precisão para o conjunto de dados. Por outro lado, se tf-idf é usado, a tabela~\ref{tab:best_tfidf} mostra que usar Naive Bayes ou Decision Tree é indistinto.
+
+\input{./tables/best_term}
+\input{./tables/best_tf_idf}
+
+Por último, todos os classificadores obtiveram melhores valores para as métricas comparado com as retornadas usando validação cruzada só no conjunto de treinamento. Isto pode ser explicado porque fazendo validação cruzada a proporção das classes não sempre ficou igual entre as instâncias usadas para treinar e validar.

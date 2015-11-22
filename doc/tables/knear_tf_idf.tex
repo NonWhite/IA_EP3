@@ -1,0 +1,23 @@
+\begin{table}[ h ]
+	\centering
+	\resizebox{.8\textwidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c |  }
+		\hline
+		Metric & K & Precision & Recall & F-Measure & Mn. Abs. Error & Mn. Sqr. Error  \\ \hline
+		\multirow{3}{*}{Euclidean} 
+ 				& 1 & 0.99 & 0.64 & 0.77 & 0.049 $\pm$ 0.009 & 0.049 $\pm$ 0.009 \\ \cline{2-7}
+				& 5 & 0.99 & 0.38 & 0.54 & 0.084 $\pm$ 0.008 & 0.084 $\pm$ 0.008 \\ \cline{2-7}
+				& 10 & 1.00 & 0.17 & 0.29 & 0.111 $\pm$ 0.008 & 0.111 $\pm$ 0.008 \\ \hline
+		\multirow{3}{*}{Manhattan} 
+				& 1 & 0.99 & 0.62 & 0.76 & 0.051 $\pm$ 0.007 & 0.051 $\pm$ 0.007 \\ \cline{2-7}
+				& 5 & 1.00 & 0.36 & 0.53 & 0.086 $\pm$ 0.007 & 0.086 $\pm$ 0.007 \\ \cline{2-7}
+				& 10 & 1.00 & 0.16 & 0.27 & 0.113 $\pm$ 0.007 & 0.113 $\pm$ 0.007 \\ \hline
+		\multirow{3}{*}{Hamming} 
+				& 1 & 0.99 & 0.66 & \textcolor{red}{0.79} & 0.047 $\pm$ 0.007 & 0.047 $\pm$ 0.007 \\ \cline{2-7}
+				& 5 & 1.00 & 0.39 & 0.56 & 0.082 $\pm$ 0.008 & 0.082 $\pm$ 0.008 \\ \cline{2-7}
+				& 10 & 1.00 & 0.20 & 0.34 & 0.107 $\pm$ 0.006 & 0.107 $\pm$ 0.006 \\ \hline
+	\end{tabular}%
+	}
+	\caption{Comparação de K-Nearest Neighbor com Tf-Idf}
+	\label{tab:knear_comparison_tfidf}
+\end{table}

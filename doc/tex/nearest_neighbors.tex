@@ -1,0 +1,14 @@
+\section{Nearest Neighbors}
+\label{sec:knn}
+
+Para comparar as diferentes configurações do experimento usamos a métrica F-Measure que é uma média armónica das métricas precisão (Precision) e cobertura (Recall). A tabela~\ref{tab:knear_comparison_term} mostra que a melhor configuração é aquela que usa distancia Euclidean e número de vizinhos igual a 1. Além disso, aquela configuração é a que tem o menor erro de todas. Em geral, pode-se ver que enquanto o valor $K$ aumenta, a cobertura cae e portanto também F-Measure.
+
+\input{./tables/knear_term_freq}
+
+Por outro lado, usando a representação Tf-Idf temos que a melhor configuração também usa $K=1$, mas a função de distancia é Hamming. O comportamento do algoritmo continua sendo o mesmo enquanto o valor de $K$ aumenta.
+
+\input{./tables/knear_tf_idf}
+
+% GRAPHICS
+%\input{./figures/knear_term_freq}
+%\input{./figures/knear_tf_idf}

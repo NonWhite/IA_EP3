@@ -1,0 +1,22 @@
+\section{Configuração de experimentos}
+\label{sec:setup}
+
+Para todos os experimentos foi usada a livraria scikit-learn (Python)\footnote{Official Site: http://scikit-learn.org/stable/}. Além disso, para cada classificador foram usadas as seguinte configurações:
+\begin{itemize}
+	\item K-Nearest Neighbors
+	\begin{itemize}
+		\item metric: euclidean, manhattan e hamming. Função da distancia entre vizinhos
+		\item k: 1, 5 , 10 e 50. Número de vizinhos a considerar por ponto
+	\end{itemize}
+	\item Decision Tree
+	\begin{itemize}
+		\item criterion: gini e entropy. Critério para seleção de atributos
+		\item depth: 10, 50 e 100. Máxima profundidade da árvore
+	\end{itemize}
+	\item Naive Bayes
+	\begin{itemize}
+		\item alpha: 1.0 , 1.0 , 100.0. Constante para Laplace smoothing
+	\end{itemize}
+\end{itemize}
+
+Os resultados para cada uma das configurações serão mostrados nas seções~\ref{sec:knn},~\ref{sec:decision} e~\ref{sec:bayes} usando só o conjunto de treinamento com validação cruzada. Na seção~\ref{sec:validation}, as melhores configurações serão usadas com ambos conjuntos (treinamento e validação) para encontrar o melhor classificador para o domínio.

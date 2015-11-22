@@ -1,41 +1,28 @@
-\section{Descrição dos personagens}
-\label{sec:characters}
+\section{Dados de entrada}
+\label{sec:dataset}
 
-Para este exercício foram considerados às personagens do anime Pokemon, especificamente aquelas da primeira temporada: 151 em total \footnote{Todos os dados foram obtidos do site oficial: http://www.pokemon.com/es/pokedex/}. O conjunto de dados tem 7 características (ou atributos) que serão descritos a continuação:
+Para este exercício foi considerado um conjunto de dados com informação sobre sms spam\footnote{Extraido de http://www.dt.fee.unicamp.br/$\sim$tiago/smsspamcollection/}. O conjunto de dados tem 5559 instâncias e 2 características (ou atributos): Type (o tipo de sms: ham ou spam) e Text (o texto original do sms).
+
+Da forma que o conjunto de dados se encontra, não é fácil usá-lo com um classificador porque o atributo Text é uma cadeia de texto muito diferente em cada instância do conjunto, mas poderia ser pré-processada de forma que seja um vetor de características como é definido a continuação:
 
 \begin{itemize}
-	\item Type: O tipo dos poderes que o Pokemon usa
-	\item Color: O cor principal da personagem
-	\item Size: Escala do tamanho padrão da personagem
-	\item Weight: Uma escala do peso da personagem
-	\item Has\_evolution: Diz se o pokemon tem evolução a outro pokemon
-	\item Is\_evolution: Diz se o pokemon evoluiu de outro
-	\item Is\_starter: Diz se o pokemon é um dos principais nos jogos do anime
+	\item Term Frequency (TF): Número de vezes que cada palavra aparece no texto do sms
+		%\[ {TF}_i( {word} ) = \sum_{j=0}^{|P^i|} P^i_j = {word} \]
+	\item Tf\_Idf: Relevância da palavra na instância comparada com o conjunto total
+		\[ {Tf\_Idf}( {word} ) = TF( {word} ) * log( N / DF( {word} ) ) \]
+		%\[ DF( {word} ) = \sum_{i=0}^N {has\_word}( P^i , {word} ) \]
+\end{itemize}
+onde $N$ é o número total de instâncias. Então o tamanho do vetor de características vai depender do número total de palavras no conjunto, mas isso gera os seguintes problemas para fazer o pré-processamento:
+\begin{itemize}
+	\item Palavras muito parecidas ou que são conjugações de outras (e.g. rise-rises, eat-ate)
+	\item Muitas abreviações de palavras (e.g. u-you, vry-very)
+	\item Palavras que aparecem en quase todos os textos ou em quase nenhum (também chamadas stop-words)
+\end{itemize}
+Para solucionar cada um dos problemas foram desenvolvidas as seguintes soluções:
+\begin{itemize}
+	\item Foi usada a livraria NLTK (Python)\footnote{Official site: http://www.nltk.org} para fazer lemmatization (mudar a palavra a uma conjugação padrão) e stemming (encontrar a raiz da palavra)
+	\item Foi usado um arquivo com sentenças equivalentes onde cada abreviação tinha um conjunto de palavras assignado\footnote{O arquivo está em: https://github.com/NonWhite/IA\_EP3/blob/master/data/equivalents.txt}
+	\item Foi usado um arquivo com as palavras que não dam muita informação sobre o texto, como pronomes ou interjeições\footnote{O arquivo está em: https://github.com/NonWhite/IA\_EP3/blob/master/data/stop\_words.txt}
 \end{itemize}
 
-A tabela~\ref{tab:dataset} mostra cada um das características das personagens e seus possíveis valores.
-
-\begin{table}[ h ]
-	\centering
-	\caption{Características e possíveis valores}
-	\label{tab:dataset}
-	\resizebox{.88\textwidth}{!}{%
-	\begin{tabular}{ l | c c c c }
-		\hline
-		Type & poison (15.07\%) & water (14.61\%) & normal (10.05\%) & flying (9.13\%) \\
-			& grass (6.39\%) & ground (6.39\%) & psychic (6.39\%) & fire (5.48\%) \\
-			& bug (5.48\%) & rock (5.02\%) & electric (4.11\%) & fighting (3.65\%) \\
-			& ice (2.28\%) & fairy (2.28\%) & ghost (1.37\%) & dragon (1.37\&) \\
-			& steel (0.91\%) & & &  \\ \hline
-		Color & brown (23.18\%) & blue (16.56\%) & purple (15.23\%) & yellow (12.58\%) \\
-			& red (10.60\%) & pink (7.95\%) & green (5.96\%) & gray (5.30\%) \\
-			& white (1.99\%) & black (0.66\%) & & \\ \hline
-		Size & small (62.25\%) & medium (33.11\%) & big (4.64\%) \\ \cline{1-4}
-		Weight & light (66.23\%) & medium (31.79\%) & heavy (1.99\%) \\ \cline{1-4}
-		Has\_evolution & true (46.36\%) & false (53.64\%) \\ \cline{1-3}
-		Is\_evolution & true (47.68\%) & false (52.32\%) \\ \cline{1-3}
-		Is\_starter & true (1.99\%) & false (98.01\%) \\ \cline{1-3}
-	\end{tabular}%
-	}
-\end{table}
-
+Por último, os conjuntos de dados novos (com representação de vetor de características) foram divididos em duas partes: treinamento (70\%) e validação (30\%) para os experimentos das seguintes seções.

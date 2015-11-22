@@ -1,0 +1,10 @@
+\section{Árvores de decisão}
+\label{sec:decision}
+
+Da mesma forma que fizemos a comparação das configurações na seção anterior, a melhor configuração será aquela que tenha o maior valor de F-measure. Por exemplo, na Tabela~\ref{tab:decision_term} mostra que usando como criterio de escolha de atributos Entropy e máxima profundidade 100 obtemos um melhor modelo de classificação.
+
+\input{./tables/decision_term}
+
+Por outro lado, se usamos a representação Tf-idf, existem tres configurações que tem o maior valor F-measure, mas escolhemos aquela que tem o menor erro médio. Então a melhor configuração para árvore de decisão é criterio Entropy e máxima profundidade 50.
+
+\input{./tables/decision_tfidf}

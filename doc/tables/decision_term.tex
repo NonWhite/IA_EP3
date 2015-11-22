@@ -1,0 +1,19 @@
+\begin{table}[ h ]
+	\centering
+	\resizebox{.8\textwidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c |  }
+		\hline
+		Criterion & Depth & Precision & Recall & F-Measure & Mn. Abs. Error & Mn. Sqr. Error  \\ \hline
+		\multirow{3}{*}{Gini}
+ 				& 10 & 0.92 & 0.74 & 0.82 & 0.044 $\pm$ 0.009 & 0.044 $\pm$ 0.008 \\ \cline{2-7}
+				& 50 & 0.89 & 0.82 & 0.84 & 0.039 $\pm$ 0.008 & 0.039 $\pm$ 0.008 \\ \cline{2-7}
+				& 100 & 0.89 & 0.82 & 0.85 & 0.039 $\pm$ 0.009 & 0.039 $\pm$ 0.009 \\ \hline
+		\multirow{3}{*}{Entropy}
+ 				& 10 & 0.94 & 0.70 & 0.81 & 0.044 $\pm$ 0.008 & 0.044 $\pm$ 0.007 \\ \cline{2-7}
+				& 50 & 0.91 & 0.79 & 0.84 & 0.039 $\pm$ 0.008 & 0.038 $\pm$ 0.007 \\ \cline{2-7}
+				& 100 & 0.91 & 0.80 & \textcolor{red}{0.86} & 0.037 $\pm$ 0.007 & 0.038 $\pm$ 0.008 \\ \hline
+	\end{tabular}%
+	}
+	\caption{Comparação de Decision Tree com Term Frequency}
+	\label{tab:decision_term}
+\end{table}
