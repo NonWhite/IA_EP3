@@ -5,6 +5,7 @@ from sklearn.cross_validation import cross_val_score
 def import_csv( filepath , has_header = True ) :
 	csv_data = []
 	with open( filepath , 'r' ) as f :
+		print "Reading %s" % filepath
 		p = lambda x : int( x ) if float( x ) == math.trunc( float( x ) ) else float( x )
 		for line in f :
 			if has_header :
@@ -14,6 +15,7 @@ def import_csv( filepath , has_header = True ) :
 			numbers = sp[ :-1 ]
 			sp = [ p( x ) for x in numbers ] + [ sp[ -1 ] ]
 			csv_data.append( sp )
+	print "Loaded %s" % filepath
 	return csv_data
 
 def cross_validation( data , classifier , num_folds = 10 ) :
