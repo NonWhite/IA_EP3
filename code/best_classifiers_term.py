@@ -1,6 +1,8 @@
 import sys
 import sklearn
 from classifier_utils import *
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 from sklearn.naive_bayes import MultinomialNB as mnb
 from sklearn.tree import DecisionTreeClassifier as dtc
 from sklearn.neighbors import KNeighborsClassifier as knc
@@ -16,6 +18,11 @@ def classify( model , train_data , test_data , model_name ) :
 	y_real = [ row[ -1 ] for row in test_data ]
 	y_pred = model.predict( X_test )
 	print report( y_real , y_pred )
+	tp = lambda x : 1 if x == 'spam' else 0
+	real = [ tp( v ) for v in y_real ]
+	pred = [ tp( v ) for v in y_pred ]
+	print mean_absolute_error( real , pred )
+	print mean_squared_error( real , pred )
 
 if __name__ == '__main__' :
 	if len( sys.argv ) > 2 :
